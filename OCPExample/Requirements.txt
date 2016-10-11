@@ -1,0 +1,22 @@
+Training - gets no commission
+Normal		full commission of 3% if registration has no discount
+				commission is reduced equal to the discount.
+				so if a customer is given a 3% discount - marketer receives zero commission
+Level1		reduced commission at a rate of .5% per percent of discount
+				so if a customer was registered and given a 3 percent discount
+				the marketer would receive a dicount of 3% - 1.5% = 1.5%
+Level2		reduced commission at a rate of .25
+				so if a customer was registered and given a 3 percent discount
+				the marketer would receive a dicount of 3% - .75% = 2.25%
+Level3		no reduce commission rate up to a discount of 10%
+			...higher than that marketer receive zero commission.
+			Level3 receives no bonus commissions
+			 
+Bonus commission lists (Added to normal commission if sale meets requirements)
+	Bonus commission of 1% for any student enrolled within 2 days of course Start date
+	Bonus commission of 3% for any student which causes the course to be at capacity (max one student per course)
+	
+
+Consider as a later add...	
+	Bonus commission of 2% for any student registered for a Priority level course inside of 10 days.
+		A Priority level course is defined as any course that has not reached 25% of capacity by 10 days out

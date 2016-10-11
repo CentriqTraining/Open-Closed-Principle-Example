@@ -1,0 +1,106 @@
+﻿<Window x:Class="UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:biz="clr-namespace:SalesCommissionViolation.UIConverters;assembly=SalesCommission"
+        xmlns:local="clr-namespace:UI"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="828.471" Width="689.493" Loaded="Window_Loaded">
+    <Window.Resources>
+        <Style x:Key="RightAligned" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridCell}">
+                        <Grid Background="{TemplateBinding Background }">
+                            <ContentPresenter HorizontalAlignment="Right" 
+                                              VerticalAlignment="Center" Margin="0,0,6,0" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="7*"/>
+            <RowDefinition Height="26*"/>
+        </Grid.RowDefinitions>
+        <Label x:Name="label" Content="Marketer" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <DataGrid x:Name="EmployeeGrid" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="200"  
+                  Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding}" 
+                  SelectionChanged="EmployeeGrid_SelectionChanged" >
+            <DataGrid.Resources>
+                <biz:CommissionTierLevelConverter x:Key="tiervalueConverter" />
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=FirstName}" Header="First Name" Width="175" />
+                <DataGridTextColumn Binding="{Binding Path=LastName}"  Header="Last Name" Width="175" />
+                <DataGridTextColumn Binding="{Binding Path=CommissionTierLevel, Converter={StaticResource tiervalueConverter}}" 
+                                    Header="Commission Tier" Width="125" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Label x:Name="label1" Content="Registrations" HorizontalAlignment="Left" 
+               Grid.Row="2" VerticalAlignment="Top"/>
+        <DataGrid x:Name="RegistrationGrid" HorizontalAlignment="Stretch" 
+                  VerticalAlignment="Top" Height="200"  Grid.Row="3"
+                  AutoGenerateColumns="False" ItemsSource="{Binding}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=Customer.FirstName}"
+                                    Header="First Name" Width="90" />
+                <DataGridTextColumn Binding="{Binding Path=Customer.LastName}"  
+                                    Header="Last Name" Width="90" />
+                <DataGridTextColumn Binding="{Binding Path=CreationDate, StringFormat=\{0:d\} }" 
+                                    Header="Reg Date" Width="70" CellStyle="{StaticResource RightAligned}" />
+                <DataGridTextColumn Binding="{Binding Path=Course.Description}" 
+                                    Header="Course" Width="50" />
+                <DataGridTextColumn Binding="{Binding Path=Course.BasePrice, StringFormat=\{0:N0\} }"  
+                                    Header="Price" Width="55" CellStyle="{StaticResource RightAligned}" />
+                <DataGridTextColumn Binding="{Binding Path=Discount, StringFormat=\{0:N2\} }" 
+                                    Header="Disc %" Width="45" CellStyle="{StaticResource RightAligned}" />
+                <DataGridTextColumn Binding="{Binding Path=SalePrice, StringFormat=\{0:N0\} }" 
+                                    Header="Total" Width="45" CellStyle="{StaticResource RightAligned}" />
+                <DataGridTextColumn Binding="{Binding Path=Course.StartDate, StringFormat=\{0:d\} }" 
+                                    Header="Start" Width="70" CellStyle="{StaticResource RightAligned}" />
+                <DataGridTextColumn Binding="{Binding Path=Course.EndDate, StringFormat=\{0:d\} }" 
+                                    Header="End" Width="70" CellStyle="{StaticResource RightAligned}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Label x:Name="label2" Content="Commissions" HorizontalAlignment="Left" 
+               Grid.Row="4" VerticalAlignment="Top" />
+        <DataGrid x:Name="CommissionGrid" HorizontalAlignment="Stretch" Height="275" 
+                  Grid.Row="5" VerticalAlignment="Top" AutoGenerateColumns="False" 
+                  ItemsSource="{Binding}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=Registration.Customer.FirstName}" 
+                                    Header="First Name" Width="90" />
+                <DataGridTextColumn Binding="{Binding Path=Registration.Customer.LastName}" 
+                                    Header="Last Name" Width="90" />
+                <DataGridTextColumn Binding="{Binding Path=Registration.Course.Description}" 
+                                    Header="Course" Width="50" />
+                <DataGridTextColumn Binding="{Binding Path=Registration.Course.BasePrice, StringFormat=\{0:N0\} }" 
+                                    Header="Price" Width="55" CellStyle="{StaticResource RightAligned}" />
+                <DataGridTextColumn Binding="{Binding Path=Registration.Discount, StringFormat=\{0:N2\} }" 
+                                    Header="Disc %" Width="50" CellStyle="{StaticResource RightAligned}" />
+                <DataGridTextColumn Binding="{Binding Path=Registration.SalePrice, StringFormat=\{0:N0\} }" 
+                                    Header="Price" Width="45" CellStyle="{StaticResource RightAligned}" />
+                <DataGridTextColumn Binding="{Binding Path=Description}"  
+                                    Header="Note" Width="200" />
+                <DataGridTextColumn Binding="{Binding Path=Total, StringFormat=\{0:N0\} }" 
+                                    Header="Total" Width="45" CellStyle="{StaticResource RightAligned}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <WrapPanel HorizontalAlignment="Right" Height="22"  Grid.Row="7" VerticalAlignment="Top" Orientation="Vertical">
+            <Button x:Name="cmdCalculate" Content="Calculate Commission" Width="125" Click="cmdCalculate_Click"/>
+            <Button x:Name="cmdCancel" Content="Cancel" Width="75"/>
+        </WrapPanel>
+    </Grid>
+</Window>
